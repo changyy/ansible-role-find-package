@@ -1,0 +1,27 @@
+---
+# tasks file for ansible-role-find-package
+- name: show package prefix name
+  debug: msg="{{package_name_prefix}}"
+
+- name: show find package command
+  debug: msg="{{package_find_command}}"
+
+- name: find package path
+  local_action: command bash -c "{{ package_find_command }}"
+  register: package_path_result
+  failed_when: " '' != package_path_result.stderr"
+
+- name: save package path
+  set_fact:
+    package_path: "{{package_path_result.stdout}}"
+
+- name: save package dir
+  set_fact:
+    package_dir: "{{ package_dir }}"
+
+- name: save package install dir
+  set_fact:
+    package_install_dir: "{{ package_install_dir }}"
+
+- name: show package path
+  debug: msg="{{package_path}}"
