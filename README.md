@@ -1,7 +1,7 @@
 find-package
 =========
 
-A simple tool for finding the latest package at file system. You cloud use this to
+A simple tool for finding the latest package at file system. Using this method to deploy without package server.
 
 Requirements
 ------------
