@@ -1,0 +1,30 @@
+---
+# tasks file for ansible-role-find-package
+- name: show package info
+  debug: msg="{{package_list}}"
+
+- name: find package path
+  local_action: command bash -c "{{ item.find_command }}"
+  register: package_path_result
+  with_items: package_list
+
+- name: check package exists
+  debug: var="{{item.item}}"
+  failed_when: " '' != item.stderr or item.stdout == '' or (package_path_result.results | length <= 0) "
+  with_items: package_path_result.results
+
+- name: save package path
+  set_fact: rpm_file_path="{{package_path_result.results | map(attribute='stdout') | list}}"
+  register: rpm_file_path
+
+- name: save package info
+  set_fact: rpm_file_info="{{package_path_result.results | map(attribute='item') | list}}"
+  register: rpm_file_info
+
+- name: show package path
+  debug: var="{{item}}"
+  with_items: rpm_file_path
+
+- name: show package info
+  debug: var="{{item}}"
+  with_items: rpm_file_info

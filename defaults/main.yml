@@ -4,3 +4,11 @@ package_dir: "/path/package-build/"
 package_name_prefix: "package*"
 package_find_command: "find {{ package_dir }} -name '{{ package_name_prefix }}' -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d ' ' "
 package_install_dir: "/opt/package-version-release/"
+package_list: []
+#package_list:
+#  - name: "package name for note"
+#    find_command: "find {{ package_dir }} -name 'PackageNamePrefix' -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d ' ' "
+#    install_dir: "/opt/package-version-release/"
+#  - name: "package name for note"
+#    find_command: "find {{ package_dir }} -name 'PackageNamePrefix' -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d ' ' "
+#    install_dir: "/opt/package-version-release/"
