@@ -25,6 +25,14 @@ package_find_command: "find {{ package_dir }} -name '{{ package_name_prefix }}' 
 # for other usage
 package_install_dir: "/opt/package-version-release/"
 
+# for multiple packages
+package_list:
+  - name: "my-package-name-1"
+    find_command: "find {{ package_dir }} -name '{{ package_name_prefix }}' -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d ' ' "
+  - name: "my-package-name-2"
+    find_command: "find {{ package_dir }} -name '{{ package_name_prefix }}' -printf '%T@ %p\n' | sort -n | tail -1 | cut -f2- -d ' ' "
+
+
 ```
 
 Dependencies
@@ -45,6 +53,13 @@ Example Playbook
   tasks:
   - name: copy package
     copy: src="{{hostvars['localhost']['package_path']}}" dest=/tmp
+
+  # - name: show multiple package info
+  #   debug: var="{{item}}"
+  #   with_items: hostvars['localhost']['rpm_file_info']
+  # - name: show multiple package path
+  #   debug: var="{{item}}"
+  #   with_items: hostvars['localhost']['rpm_file_path']
 ```
 
 ```bash
